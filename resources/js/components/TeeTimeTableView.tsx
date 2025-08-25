@@ -68,7 +68,7 @@ export function TeeTimeTableView({
     );
 
     const directionsLinkGenerator = useCallback(
-        (course: NearbyCourse, travelMinutes: 0): string => {
+        (course: NearbyCourse, travelMinutes: number): string => {
             const destination = [course.latitude, course.longitude].join(",");
 
             if (travelMinutes <= 0) {
