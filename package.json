@@ -1,0 +1,62 @@
+{
+    "$schema": "https://json.schemastore.org/package.json",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "tsc && vite build",
+        "dev": "vite",
+        "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    },
+    "devDependencies": {
+        "@types/lodash": "^4.17.17",
+        "@types/react": "^19.1.6",
+        "@types/react-dom": "^19.1.5",
+        "@vitejs/plugin-react": "^4.5.1",
+        "axios": "^1.8.2",
+        "concurrently": "^9.0.1",
+        "eslint": "^8.57.1",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-config-erb": "^4.1.0",
+        "eslint-config-prettier": "^10.1.5",
+        "eslint-import-resolver-typescript": "^4.4.3",
+        "eslint-import-resolver-webpack": "^0.13.10",
+        "eslint-plugin-compat": "^6.0.2",
+        "eslint-plugin-import": "^2.31.0",
+        "eslint-plugin-jest": "^28.13.0",
+        "eslint-plugin-jsx-a11y": "^6.10.2",
+        "eslint-plugin-prettier": "^5.4.1",
+        "eslint-plugin-promise": "^7.2.1",
+        "eslint-plugin-react": "^7.37.5",
+        "eslint-plugin-react-hooks": "^4.6.2",
+        "eslint-plugin-simple-import-sort": "^12.1.1",
+        "eslint-plugin-unused-imports": "^4.1.4",
+        "laravel-vite-plugin": "^1.2.0",
+        "lodash": "^4.17.21",
+        "typescript": "^5.8.3",
+        "vite": "^6.3.5",
+        "vite-plugin-checker": "^0.9.3"
+    },
+    "dependencies": {
+        "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.0",
+        "@fontsource/roboto": "^5.2.5",
+        "@mui/icons-material": "^7.1.1",
+        "@mui/material": "^7.1.1",
+        "@mui/x-data-grid": "^8.7.0",
+        "@mui/x-date-pickers": "^8.6.0",
+        "date-fns": "^4.1.0",
+        "date-fns-tz": "^3.2.0",
+        "maplibre-gl": "^5.6.0",
+        "material-ui-confirm": "^4.0.0",
+        "radar-sdk-js": "^4.5.3",
+        "react": "^19.1.0",
+        "react-dom": "^19.1.0",
+        "react-router": "^7.6.2",
+        "react-use-draggable-scroll": "^0.4.7"
+    },
+    "browserslist": [
+        "> 0.5%",
+        "not dead",
+        "not op_mini all"
+    ]
+}
