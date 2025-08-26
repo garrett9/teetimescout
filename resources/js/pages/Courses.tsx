@@ -8,6 +8,8 @@ import {
     Link,
     Stack,
     Typography,
+    useMediaQuery,
+    useTheme,
 } from "@mui/material";
 import {
     DataGrid,
@@ -79,7 +81,53 @@ const columns: GridColDef<Course>[] = [
     },
 ];
 
+const mobileColumns: GridColDef<Course>[] = [
+    {
+        field: "mobile",
+        headerName: "Course",
+        flex: 1,
+        sortable: false,
+        filterable: false,
+        renderCell: (params) => (
+            <Stack
+                spacing={0}
+                sx={{
+                    gap: 1,
+                    py: 1.5,
+                }}
+            >
+                <Link component={RouterLink} to={paths.course(params.row.slug)}>
+                    {params.row.name}
+                </Link>
+
+                <Link
+                    href={`https://www.google.com/maps/place/${params.row.latitude},${params.row.longitude}/@${params.row.latitude},${params.row.longitude},11z`}
+                    target="_blank"
+                >
+                    <Stack
+                        direction="row"
+                        alignItems="center"
+                        spacing={0}
+                        sx={{
+                            gap: 1,
+                        }}
+                    >
+                        <Map fontSize="small" />{" "}
+                        <span>
+                            {params.row.city} {params.row.state},{" "}
+                            {params.row.country}
+                        </span>
+                    </Stack>
+                </Link>
+            </Stack>
+        ),
+    },
+];
+
 export function Courses() {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
     const dataSource: GridDataSource = {
         getRows: async (
             params: GridGetRowsParams,
@@ -171,9 +219,11 @@ export function Courses() {
                     <CardContent>
                         <DataGrid
                             showToolbar
-                            columns={columns}
+                            columns={isMobile ? mobileColumns : columns}
+                            getRowHeight={() => "auto"}
                             pagination
                             dataSourceCache={null}
+                            disableColumnFilter={isMobile}
                             dataSource={dataSource}
                             getRowId={(row) => row.slug}
                             slotProps={{
@@ -207,6 +257,9 @@ export function Courses() {
                             onDataSourceError={(e) => console.log(e)}
                             pageSizeOptions={[10, 25, 50, 100]}
                             disableRowSelectionOnClick
+                            onPaginationModelChange={() =>
+                                window.scrollTo({ top: 0, behavior: "smooth" })
+                            }
                         />
                     </CardContent>
                 </Card>
