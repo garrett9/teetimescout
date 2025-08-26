@@ -122,7 +122,7 @@ export function Home() {
         setMobileOpen(false);
     }, [
         sessionPreferences.date,
-        userPreferences.address,
+        sessionPreferences.startingAt,
         userPreferences.withinMinutes,
         userPreferences.courseIds,
     ]);
@@ -146,7 +146,7 @@ export function Home() {
                         display: { xs: "block", md: "none" },
                         "& .MuiDrawer-paper": {
                             boxSizing: "border-box",
-                            width: "75%",
+                            width: "100%",
                         },
                     }}
                     slotProps={{
@@ -159,6 +159,7 @@ export function Home() {
                         courses={courses}
                         address={address}
                         startingAtDefault={STARTING_AT_DEFAULT}
+                        onClose={() => setMobileOpen(false)}
                     />
                 </Drawer>
                 <Drawer
@@ -178,6 +179,7 @@ export function Home() {
                         courses={courses}
                         address={address}
                         startingAtDefault={STARTING_AT_DEFAULT}
+                        onClose={() => setMobileOpen(false)}
                     />
                 </Drawer>
             </Box>

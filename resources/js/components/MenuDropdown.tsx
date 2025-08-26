@@ -1,6 +1,12 @@
 import { useState } from "react";
 
-import { ArrowDropDown, Search, Send } from "@mui/icons-material";
+import {
+    ArrowDropDown,
+    GolfCourse,
+    Search,
+    Send,
+    SportsGolf,
+} from "@mui/icons-material";
 import {
     Button,
     ListItemIcon,
@@ -14,12 +20,13 @@ import { Link } from "react-router";
 
 import { paths } from "../routes";
 
-interface HelpDropdownProps {
+interface MenuDropdownProps {
     sx?: SxProps<Theme>;
 }
 
-export function HelpDropdown({ sx }: HelpDropdownProps) {
+export function MenuDropdown({ sx }: MenuDropdownProps) {
     const [menuAnchor, setMenuAnchor] = useState<HTMLElement>();
+
     return (
         <>
             <Button
@@ -32,13 +39,25 @@ export function HelpDropdown({ sx }: HelpDropdownProps) {
                 }}
                 onClick={(e) => setMenuAnchor(e.currentTarget)}
             >
-                Help <ArrowDropDown fontSize="small" />
+                Menu <ArrowDropDown fontSize="small" />
             </Button>
             <Menu
                 anchorEl={menuAnchor}
                 onClose={() => setMenuAnchor(undefined)}
                 open={Boolean(menuAnchor)}
             >
+                <MenuItem component={Link} to={paths.home}>
+                    <ListItemIcon>
+                        <SportsGolf />
+                    </ListItemIcon>
+                    <ListItemText primary="Tee Times Near Me" />
+                </MenuItem>
+                <MenuItem component={Link} to={paths.courses}>
+                    <ListItemIcon>
+                        <GolfCourse />
+                    </ListItemIcon>
+                    <ListItemText primary="Course Directory" />
+                </MenuItem>
                 <MenuItem component={Link} to={paths.requestCourse}>
                     <ListItemIcon>
                         <Search />

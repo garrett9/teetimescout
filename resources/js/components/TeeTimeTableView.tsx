@@ -283,8 +283,18 @@ export function TeeTimeTableView({
                                             }}
                                         >
                                             <Stack
-                                                direction="row"
-                                                alignItems="center"
+                                                spacing={0}
+                                                direction={{
+                                                    xs: "column",
+                                                    md: "row",
+                                                }}
+                                                alignItems={{
+                                                    xs: "left",
+                                                    md: "center",
+                                                }}
+                                                sx={{
+                                                    gap: 1,
+                                                }}
                                             >
                                                 <Typography variant="h6">
                                                     {name}

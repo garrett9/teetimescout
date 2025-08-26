@@ -28,7 +28,6 @@ import {
 import { AppContainer } from "../components/AppContainer";
 import { TeeTimeTableView } from "../components/TeeTimeTableView";
 import { useFetchTeeTimes } from "../hooks/useFetchTeeTimes";
-import { useUserPreferences } from "../providers/UserPreferences";
 import { paths } from "../routes";
 import { ApiResponse } from "../types/api";
 import { Course as CourseType, NearbyCourse } from "../types/Course";
@@ -46,7 +45,6 @@ export function Course() {
     const [displayedCourses, setDisplayedCourses] = useState<NearbyCourse[]>();
     const [searchParams, setSearchParams] = useSearchParams();
     const rawDate = searchParams.get("date");
-    const { userPreferences, client } = useUserPreferences();
 
     const date = useMemo(() => {
         if (rawDate) {
@@ -147,7 +145,16 @@ export function Course() {
                             },
                         ]}
                         header={
-                            <Stack direction="row" alignItems="center">
+                            <Stack
+                                direction={{
+                                    xs: "column",
+                                    md: "row",
+                                }}
+                                alignItems={{
+                                    xs: "left",
+                                    md: "center",
+                                }}
+                            >
                                 <DatePicker
                                     label="Date"
                                     value={date}
@@ -162,7 +169,7 @@ export function Course() {
                                         });
                                     }}
                                 />
-                                <ButtonGroup variant="outlined">
+                                <ButtonGroup variant="outlined" size="small">
                                     <Button
                                         onClick={() => {
                                             setSearchParams({

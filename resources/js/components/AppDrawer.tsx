@@ -1,6 +1,11 @@
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 
-import { FilterAltOutlined, NavigateNext, Today } from "@mui/icons-material";
+import {
+    Close,
+    FilterAltOutlined,
+    NavigateNext,
+    Today,
+} from "@mui/icons-material";
 import {
     Box,
     Button,
@@ -10,6 +15,7 @@ import {
     FormControl,
     FormControlLabel,
     FormGroup,
+    IconButton,
     InputLabel,
     MenuItem,
     Select,
@@ -30,6 +36,7 @@ interface AppDrawerProps {
     address?: Address;
     courses?: NearbyCourse[];
     startingAtDefault: number;
+    onClose?: () => void;
 }
 
 const valueLabelFormat = (value: number) => {
@@ -40,6 +47,7 @@ export function AppDrawer({
     address,
     courses,
     startingAtDefault,
+    onClose,
 }: AppDrawerProps) {
     const { userPreferences, sessionPreferences, client } =
         useUserPreferences();
@@ -69,13 +77,32 @@ export function AppDrawer({
 
     return (
         <div>
-            <Toolbar>
-                <FilterAltOutlined fontSize="medium" />{" "}
-                <Typography variant="h6" component="div">
-                    Filters
-                </Typography>
-            </Toolbar>
-            <Divider />
+            <Box
+                sx={{
+                    position: "sticky",
+                    top: 0,
+                    bgcolor: "white",
+                    zIndex: 100,
+                }}
+            >
+                <Toolbar
+                    sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                    }}
+                >
+                    <Stack spacing={0} direction="row" alignItems="center">
+                        <FilterAltOutlined fontSize="medium" />{" "}
+                        <Typography variant="h6" component="div">
+                            Filters
+                        </Typography>
+                    </Stack>
+                    <IconButton size="small" onClick={onClose}>
+                        <Close />
+                    </IconButton>
+                </Toolbar>
+                <Divider />
+            </Box>
             <Box sx={{ p: 3.5 }}>
                 {isLoading && (
                     <Stack spacing={1}>
@@ -171,34 +198,42 @@ export function AppDrawer({
                                     No courses found
                                 </Typography>
                             )}
-                            {sortedCourses?.map((course) => (
-                                <FormControlLabel
-                                    key={course.slug}
-                                    control={
-                                        <Checkbox
-                                            size="small"
-                                            checked={
-                                                localCourseIds[course.slug] ||
-                                                false
+                            {sortedCourses && sortedCourses.length > 0 && (
+                                <Stack spacing={0.1}>
+                                    {sortedCourses.map((course) => (
+                                        <FormControlLabel
+                                            key={course.slug}
+                                            control={
+                                                <Checkbox
+                                                    size="small"
+                                                    checked={
+                                                        localCourseIds[
+                                                            course.slug
+                                                        ] || false
+                                                    }
+                                                    onChange={(
+                                                        e: ChangeEvent<HTMLInputElement>,
+                                                    ) => {
+                                                        const courseIds = {
+                                                            ...localCourseIds,
+                                                            [course.slug]:
+                                                                e.target
+                                                                    .checked,
+                                                        };
+                                                        setLocalCourseIds(
+                                                            courseIds,
+                                                        );
+                                                        debouncedSaveCourseIds(
+                                                            courseIds,
+                                                        );
+                                                    }}
+                                                />
                                             }
-                                            onChange={(
-                                                e: ChangeEvent<HTMLInputElement>,
-                                            ) => {
-                                                const courseIds = {
-                                                    ...localCourseIds,
-                                                    [course.slug]:
-                                                        e.target.checked,
-                                                };
-                                                setLocalCourseIds(courseIds);
-                                                debouncedSaveCourseIds(
-                                                    courseIds,
-                                                );
-                                            }}
+                                            label={course.name}
                                         />
-                                    }
-                                    label={course.name}
-                                />
-                            ))}
+                                    ))}
+                                </Stack>
+                            )}
                         </FormGroup>
                         <FormGroup sx={{ width: "90%" }}>
                             <InputLabel size="medium">Starting At</InputLabel>

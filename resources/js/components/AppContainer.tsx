@@ -13,6 +13,7 @@ import { Link as RouterLink } from "react-router";
 import logo from "../../images/logo.webp";
 import { paths } from "../routes";
 import { HelpDropdown } from "./HelpDropdown";
+import { MenuDropdown } from "./MenuDropdown";
 
 export function AppContainer({ children }: PropsWithChildren) {
     return (
@@ -43,8 +44,9 @@ export function AppContainer({ children }: PropsWithChildren) {
                             to={paths.home}
                             component={RouterLink}
                         >
-                            <i>Tee Time Scout</i>
+                            Tee Time Scout
                         </Typography>
+                        <Box sx={{ flexGrow: 1 }} />
                         <Button
                             color="inherit"
                             variant="text"
@@ -54,11 +56,14 @@ export function AppContainer({ children }: PropsWithChildren) {
                             sx={{
                                 p: 1,
                                 px: 2,
+                                display: {
+                                    xs: "none",
+                                    lg: "inline-flex",
+                                },
                             }}
                         >
                             Tee Times Near Me
                         </Button>
-                        <Box sx={{ flexGrow: 1 }} />
                         <Button
                             color="inherit"
                             variant="text"
@@ -68,11 +73,29 @@ export function AppContainer({ children }: PropsWithChildren) {
                             sx={{
                                 p: 1,
                                 px: 2,
+                                display: {
+                                    xs: "none",
+                                    lg: "inline-flex",
+                                },
                             }}
                         >
                             Course Directory
                         </Button>
-                        <HelpDropdown />
+                        <HelpDropdown
+                            sx={{
+                                display: {
+                                    xs: "none",
+                                    lg: "inline-flex",
+                                },
+                            }}
+                        />
+                        <MenuDropdown
+                            sx={{
+                                display: {
+                                    lg: "none",
+                                },
+                            }}
+                        />
                     </Toolbar>
                 </Container>
             </AppBar>

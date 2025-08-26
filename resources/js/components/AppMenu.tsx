@@ -12,6 +12,7 @@ import { Link as RouterLink } from "react-router";
 import logo from "../../images/logo.webp";
 import { paths } from "../routes";
 import { HelpDropdown } from "./HelpDropdown";
+import { MenuDropdown } from "./MenuDropdown";
 
 interface AppMenuProps {
     drawerWidth?: number;
@@ -78,11 +79,29 @@ export function AppMenu({ onAppMenuClick, drawerWidth }: AppMenuProps) {
                     sx={{
                         p: 1,
                         px: 2,
+                        display: {
+                            xs: "none",
+                            lg: "inline-flex",
+                        },
                     }}
                 >
                     Course Directory
                 </Button>
-                <HelpDropdown />
+                <HelpDropdown
+                    sx={{
+                        display: {
+                            xs: "none",
+                            lg: "inline-flex",
+                        },
+                    }}
+                />
+                <MenuDropdown
+                    sx={{
+                        display: {
+                            lg: "none",
+                        },
+                    }}
+                />
             </Toolbar>
         </AppBar>
     );
