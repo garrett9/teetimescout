@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 
 import {
     Close,
@@ -74,6 +74,24 @@ export function AppDrawer({
         () => courses?.sort((a, b) => a.name.localeCompare(b.name)),
         [courses],
     );
+
+    const allCoursesSelected = useMemo(
+        () => sortedCourses?.every((course) => localCourseIds[course.slug]),
+        [sortedCourses, localCourseIds],
+    );
+
+    const toggleSelectAll = useCallback(() => {
+        const newCourseIds: Record<string, boolean> = {
+            ...localCourseIds,
+        };
+        console.log(newCourseIds);
+        Object.keys(newCourseIds).forEach((slug) => {
+            newCourseIds[slug] = !allCoursesSelected;
+        });
+
+        setLocalCourseIds(newCourseIds);
+        debouncedSaveCourseIds(newCourseIds);
+    }, [allCoursesSelected, debouncedSaveCourseIds, localCourseIds]);
 
     return (
         <div>
@@ -192,7 +210,29 @@ export function AppDrawer({
                             </Select>
                         </FormControl>
                         <FormGroup>
-                            <InputLabel size="medium">Courses</InputLabel>
+                            <InputLabel size="medium">
+                                <Stack
+                                    direction="row"
+                                    alignItems="center"
+                                    spacing={0}
+                                >
+                                    <span>Courses</span>
+                                    <FormControlLabel
+                                        label={
+                                            allCoursesSelected
+                                                ? "Deselect All"
+                                                : "Select All"
+                                        }
+                                        checked={allCoursesSelected}
+                                        control={
+                                            <Checkbox
+                                                size="small"
+                                                onChange={toggleSelectAll}
+                                            />
+                                        }
+                                    />
+                                </Stack>
+                            </InputLabel>
                             {courses?.length <= 0 && (
                                 <Typography color="error">
                                     No courses found

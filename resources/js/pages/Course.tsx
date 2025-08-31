@@ -264,7 +264,15 @@ export function Course() {
                 )}
                 {!isLoading && course && nearbyCourseTeeTimes.length > 0 && (
                     <>
-                        <Divider>Other Courses Near {course.name}</Divider>
+                        <Divider
+                            sx={{
+                                ".MuiDivider-wrapper": {
+                                    whiteSpace: "wrap",
+                                },
+                            }}
+                        >
+                            Other Courses Near {course.name}
+                        </Divider>
                         <TeeTimeTableView
                             teeTimes={nearbyCourseTeeTimes}
                             courses={displayedCourses || []}

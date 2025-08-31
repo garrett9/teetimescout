@@ -220,7 +220,7 @@ export function Courses() {
                         <DataGrid
                             showToolbar
                             columns={isMobile ? mobileColumns : columns}
-                            getRowHeight={() => "auto"}
+                            getRowHeight={() => (isMobile ? "auto" : undefined)}
                             pagination
                             dataSourceCache={null}
                             disableColumnFilter={isMobile}
