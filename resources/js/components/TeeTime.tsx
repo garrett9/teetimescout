@@ -37,60 +37,50 @@ export function TeeTime({ teeTime }: TeeTimeProps) {
     return (
         <Card
             sx={{
-                width: 240,
                 p: 2,
+                whiteSpace: "nowrap",
             }}
         >
-            <Stack spacing={0}>
-                <Stack
-                    justifyContent="space-between"
-                    alignContent="center"
-                    direction="row"
+            <Stack
+                spacing={0}
+                textAlign="center"
+                sx={{
+                    gap: 1,
+                }}
+            >
+                <Typography
+                    sx={{
+                        fontWeight: "bold",
+                    }}
                 >
-                    <Typography
-                        fontSize={14}
-                        fontWeight="bold"
-                        color="textSecondary"
+                    {teeTimeString}
+                </Typography>
+                <Typography margin="auto">
+                    <Box
+                        component="span"
+                        sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            gap: 0.2,
+                        }}
                     >
-                        {teeTimeString}
-                    </Typography>
-                    <Typography
-                        fontSize={14}
-                        fontWeight="bold"
-                        color="textSecondary"
-                    >
-                        <Box
-                            component="span"
-                            sx={{
-                                display: "flex",
-                                flexDirection: "row",
-                                alignContent: "center",
-                            }}
-                        >
-                            <Group />{" "}
-                            <Typography sx={{ pl: 1 }} component="span">
-                                {playersDisplay}
-                            </Typography>
-                            <Flag sx={{ pl: 1 }} />{" "}
-                            <Typography component="span">
-                                {holesDisplay}
-                            </Typography>
-                        </Box>
-                    </Typography>
-                </Stack>
-                <Box textAlign="center">
-                    <Typography>{teeTime.name}</Typography>
-                    <Typography
-                        fontSize={18}
-                        sx={{ pt: 1, fontWeight: "bold" }}
-                        variant="body1"
-                    >
-                        {priceDisplay}
-                    </Typography>
-                </Box>
+                        <Group fontSize="small" />{" "}
+                        <Typography component="span">
+                            {playersDisplay}
+                        </Typography>
+                        <Typography>/</Typography>
+                        <Flag fontSize="small" />{" "}
+                        <Typography component="span">{holesDisplay}</Typography>
+                    </Box>
+                </Typography>
+
+                <Typography variant="body1">{priceDisplay}</Typography>
+
                 <Button
                     sx={{ textTransform: "uppercase" }}
                     fullWidth
+                    size="small"
                     variant="outlined"
                     target="_blank"
                     href={teeTime.link}

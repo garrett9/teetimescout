@@ -84,7 +84,6 @@ export function AppDrawer({
         const newCourseIds: Record<string, boolean> = {
             ...localCourseIds,
         };
-        console.log(newCourseIds);
         Object.keys(newCourseIds).forEach((slug) => {
             newCourseIds[slug] = !allCoursesSelected;
         });
@@ -239,7 +238,11 @@ export function AppDrawer({
                                 </Typography>
                             )}
                             {sortedCourses && sortedCourses.length > 0 && (
-                                <Stack spacing={0.1}>
+                                <Stack
+                                    sx={{
+                                        gap: 1,
+                                    }}
+                                >
                                     {sortedCourses.map((course) => (
                                         <FormControlLabel
                                             key={course.slug}

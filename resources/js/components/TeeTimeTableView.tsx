@@ -270,6 +270,7 @@ export function TeeTimeTableView({
                                 <React.Fragment key={name}>
                                     <TableRow>
                                         <TableCell
+                                            colSpan={10}
                                             sx={{
                                                 position: "sticky",
                                                 left: 0,
@@ -278,7 +279,6 @@ export function TeeTimeTableView({
                                                 lineHeight: 0.75,
                                                 paddingTop: 1,
                                                 paddingBottom: 1,
-                                                whiteSpace: "nowrap",
                                                 borderBottom: 0,
                                             }}
                                         >
@@ -296,7 +296,16 @@ export function TeeTimeTableView({
                                                     gap: 1,
                                                 }}
                                             >
-                                                <Typography variant="h6">
+                                                <Typography
+                                                    variant="h6"
+                                                    sx={{
+                                                        maxWidth: {
+                                                            xs: 400,
+                                                            sm: 500,
+                                                            md: 1400,
+                                                        },
+                                                    }}
+                                                >
                                                     {name}
                                                 </Typography>
 
