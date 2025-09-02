@@ -154,27 +154,22 @@ export function TeeTimeTableView({
             }),
         );
 
-        // Detect empty runs per course (of 2 or more consecutive empty groups)
         const localScrollButtons: Record<string, Set<string>> = {};
         Object.entries(finalGrouped).forEach(([name, group]) => {
             const runStarts = new Set<string>();
-            let currentRun: string[] = [];
+            let inRun = false;
 
-            localFilteredTimeKeys.forEach((key) => {
-                if (group[key].length === 0) {
-                    currentRun.push(key);
-                } else {
-                    if (currentRun.length >= 2) {
-                        runStarts.add(currentRun[0]);
+            Object.entries(group).forEach(([key, localTeeTimes]) => {
+                if (localTeeTimes.length === 0) {
+                    if (!inRun) {
+                        // This is the first empty in a run
+                        runStarts.add(key);
+                        inRun = true;
                     }
-                    currentRun = [];
+                } else {
+                    inRun = false;
                 }
             });
-
-            // Edge case: run at end
-            if (currentRun.length >= 2) {
-                runStarts.add(currentRun[0]);
-            }
 
             localScrollButtons[name] = runStarts;
         });
@@ -193,11 +188,16 @@ export function TeeTimeTableView({
         const container = tableContainerRef.current;
 
         if (cell && container) {
-            const offsetLeft =
-                cell.offsetLeft - container.offsetLeft + container.scrollLeft;
+            // cell position relative to container
+            const cellRect = cell.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+
+            // left distance of cell inside the scroll container
+            const leftOffset =
+                cellRect.left - containerRect.left + container.scrollLeft;
 
             container.scrollTo({
-                left: offsetLeft,
+                left: leftOffset,
                 behavior: "smooth",
             });
         }
@@ -270,7 +270,11 @@ export function TeeTimeTableView({
                                 <React.Fragment key={name}>
                                     <TableRow>
                                         <TableCell
-                                            colSpan={10}
+                                            colSpan={
+                                                Object.keys(
+                                                    groupedTimesByInterval,
+                                                ).length
+                                            }
                                             sx={{
                                                 position: "sticky",
                                                 left: 0,
@@ -422,28 +426,37 @@ export function TeeTimeTableView({
                                         {Object.entries(
                                             groupedTimesByInterval,
                                         ).map(([time, teeTimesInInterval]) => {
-                                            const isButtonSlot =
-                                                scrollButtons[name]?.has(time);
                                             const nextAvailableTime =
                                                 findNextAvailableTimeKeyForCourse(
                                                     time,
                                                     name,
                                                 );
+
+                                            const isRunStart =
+                                                scrollButtons[name]?.has(time);
+
                                             return (
                                                 <TableCell
                                                     key={time}
                                                     sx={{
                                                         textAlign: "center",
-                                                        bgcolor: "#cecece1f",
-                                                        ...(isButtonSlot &&
-                                                        !nextAvailableTime
+                                                        backgroundColor:
+                                                            "#f9f9f9",
+                                                        zIndex: 4,
+                                                        position: "relative",
+                                                        ...(isRunStart
                                                             ? {
                                                                   position:
                                                                       "sticky",
                                                                   left: 0,
-                                                                  backgroundColor:
-                                                                      "#f9f9f9",
-                                                                  height: 216,
+                                                                  zIndex: 3,
+                                                              }
+                                                            : {}),
+                                                        ...(!isRunStart &&
+                                                        teeTimesInInterval.length <=
+                                                            0
+                                                            ? {
+                                                                  zIndex: 2,
                                                               }
                                                             : {}),
                                                     }}
@@ -468,7 +481,7 @@ export function TeeTimeTableView({
                                                                 />
                                                             ),
                                                         )}
-                                                        {isButtonSlot &&
+                                                        {isRunStart &&
                                                             (nextAvailableTime ? (
                                                                 <Button
                                                                     size="small"

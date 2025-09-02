@@ -55,7 +55,7 @@ export function TeeTime({ teeTime }: TeeTimeProps) {
                 >
                     {teeTimeString}
                 </Typography>
-                <Typography margin="auto">
+                <Box margin="auto">
                     <Box
                         component="span"
                         sx={{
@@ -73,7 +73,7 @@ export function TeeTime({ teeTime }: TeeTimeProps) {
                         <Flag fontSize="small" />{" "}
                         <Typography component="span">{holesDisplay}</Typography>
                     </Box>
-                </Typography>
+                </Box>
 
                 <Typography variant="body1">{priceDisplay}</Typography>
 
