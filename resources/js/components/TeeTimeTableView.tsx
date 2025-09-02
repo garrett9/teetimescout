@@ -284,27 +284,23 @@ export function TeeTimeTableView({
                                             <Stack
                                                 spacing={0}
                                                 direction={{
-                                                    xs: "column",
-                                                    md: "row",
+                                                    md: "column",
+                                                    lg: "row",
                                                 }}
                                                 alignItems={{
-                                                    xs: "left",
-                                                    md: "center",
+                                                    md: "left",
+                                                    lg: "center",
                                                 }}
                                                 sx={{
                                                     gap: 1,
+                                                    width: {
+                                                        xs: 300,
+                                                        sm: 500,
+                                                        md: 1400,
+                                                    },
                                                 }}
                                             >
-                                                <Typography
-                                                    variant="h6"
-                                                    sx={{
-                                                        maxWidth: {
-                                                            xs: 400,
-                                                            sm: 500,
-                                                            md: 1400,
-                                                        },
-                                                    }}
-                                                >
+                                                <Typography variant="h6">
                                                     {name}
                                                 </Typography>
 
