@@ -270,11 +270,6 @@ export function TeeTimeTableView({
                                 <React.Fragment key={name}>
                                     <TableRow>
                                         <TableCell
-                                            colSpan={
-                                                Object.keys(
-                                                    groupedTimesByInterval,
-                                                ).length
-                                            }
                                             sx={{
                                                 position: "sticky",
                                                 left: 0,
