@@ -43,6 +43,8 @@ class CreateSitemap extends Command
 
         $sitemap->writeToFile(public_path('sitemap.xml'));
 
+        $this->info('Sitemap created!');
+
         return self::SUCCESS;
     }
 }
