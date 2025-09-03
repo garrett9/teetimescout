@@ -5,8 +5,6 @@ namespace App\Console\Commands;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
 
 class CreateAdmin extends Command
 {
@@ -29,22 +27,23 @@ class CreateAdmin extends Command
      */
     public function handle(): void
     {
-        $validator = Validator::make([
-            'email'    => $this->ask('What is the email address?'),
-            'password' => $this->secret('What is the password'),
-        ], [
-            'email'    => 'required|email',
-            'password' => 'required|string|min:7',
-        ]);
+        $email = config('app.super_admin.email');
+        $password = config('app.super_admin.passwrd');
+        if (! $email || ! $password) {
+            $this->error('No email or password is configured in your .env file.');
 
-        if ($validator->fails()) {
-            throw ValidationException::withMessages($validator->messages()->toArray());
+            return;
         }
 
-        $validated = $validator->validated();
+        if ($user = User::where('email', $email)->first()) {
+            $this->error('Super admin already exists');
+
+            return;
+        }
+
         $user = new User;
-        $user->email = $validated['email'];
-        $user->password = Hash::make($validated['password']);
+        $user->email = $email;
+        $user->password = Hash::make($password);
         $user->is_admin = true;
         $user->save();
 
